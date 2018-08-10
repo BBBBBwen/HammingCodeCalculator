@@ -7,8 +7,8 @@ public class Calculator {
 		String input = JOptionPane.showInputDialog("Enter a number");
 		int[] inBry = BinaryGenerate(input);
 		int[] HMcode = HammingCodeGenerate(inBry);
-		JOptionPane.showMessageDialog(null, printArray("Bit Convertion: ", inBry));
-		JOptionPane.showMessageDialog(null, printArray("HammingCode: ", HMcode));
+		JOptionPane.showMessageDialog(null,
+				printArray("Bit Convertion: ", inBry) + "\n" + printArray("HammingCode: ", HMcode));
 
 	}
 
@@ -38,7 +38,7 @@ public class Calculator {
 	public static int[] HammingCodeGenerate(int[] i) {
 		int m = i.length;
 		for (int j = 0;; j++) {
-			if (Math.pow(2, j) >= m + j + 1) {
+			if (m + j + 1 >= Math.pow(2, j)) {
 				p = j;
 				break;
 			}
@@ -47,17 +47,17 @@ public class Calculator {
 		int[] PCount = new int[p];
 		int count = 0;
 		for (int a = 0; a < bry.length; a++) {
-			if (parity(a+1)) {
+			if (parity(a + 1)) {
 				PCount[count] = a;
 				count++;
-			}else {
-				bry[a] = i[a-count];
+			} else {
+				bry[a] = i[a - count];
 			}
 		}
 		for (int k = 0; k < p; k++) {
 			bry[PCount[k]] = EvenParity(PCount[k], bry);
 		}
-		
+
 		return bry;
 	}
 
