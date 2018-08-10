@@ -5,11 +5,24 @@ public class Calculator {
 
 	public static void main(String[] args) {
 		String input = JOptionPane.showInputDialog("Enter a number");
-		JOptionPane.showMessageDialog(null, "Bit conversion:" + BinaryGenerate(input));
+		int[] inBry = BinaryGenerate(input);
+		//int[] HMcode = HammingCodeGenerate(inBry);
+		JOptionPane.showMessageDialog(null, printArray("Bit Convertion: ", inBry));
+		//JOptionPane.showMessageDialog(null, printArray("HammingCode: ", HMcode));
+
 	}
 
-	public static String BinaryGenerate(String i) {
-		String Binary = "";
+	static public String printArray(String s, int[] a) {
+		String str = (s + " ");
+		int i = 0;
+		while (i < a.length) {
+			str = str + a[i] + " ";
+			i++;
+		}
+		return str;
+	}
+
+	public static int[] BinaryGenerate(String i) {
 		int[] bry = new int[i.length()];
 		for (int a = 0; a < i.length(); a++) {
 			bry[a] = i.charAt(a);
@@ -18,14 +31,12 @@ public class Calculator {
 			} else {
 				bry[a] = 1;
 			}
-			Binary = Binary + bry[a] + " ";
 		}
-		return Binary;
+		return bry;
 	}
 
-	public static String HammingCodeGenerate(String i) {
-		int m = i.length();
-		String HMCode = "";
+	public static int[] HammingCodeGenerate(int[] i) {
+		int m = i.length;
 		for (int j = 0;; j++) {
 			if (Math.pow(2, j) >= m + j + 1) {
 				p = j;
@@ -34,19 +45,17 @@ public class Calculator {
 		}
 		int[] bry = new int[m + p];
 		int b = 0;
-		for (int a = 0; a < m + p; a++) {
+		for (int a = 0; a < bry.length; a++) {
 			if (parity(a)) {
-				bry[a] = i.charAt(b);
+				bry[a] = i[b];
 				b++;
 			}
 		}
 		for (int k = 0; k < p; k++) {
 			bry[(int) Math.pow(2, k) - 1] = EvenParity(k, bry);
 		}
-		for (int g = 0; g < m + p; g++) {
-			HMCode = HMCode + bry[g] + " ";
-		}
-		return HMCode;
+		
+		return bry;
 	}
 
 	public static boolean parity(int i) {
