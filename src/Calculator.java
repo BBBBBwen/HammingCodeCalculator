@@ -6,9 +6,9 @@ public class Calculator {
 	public static void main(String[] args) {
 		String input = JOptionPane.showInputDialog("Enter a number");
 		int[] inBry = BinaryGenerate(input);
-		//int[] HMcode = HammingCodeGenerate(inBry);
+		int[] HMcode = HammingCodeGenerate(inBry);
 		JOptionPane.showMessageDialog(null, printArray("Bit Convertion: ", inBry));
-		//JOptionPane.showMessageDialog(null, printArray("HammingCode: ", HMcode));
+		JOptionPane.showMessageDialog(null, printArray("HammingCode: ", HMcode));
 
 	}
 
@@ -44,15 +44,18 @@ public class Calculator {
 			}
 		}
 		int[] bry = new int[m + p];
-		int b = 0;
+		int[] PCount = new int[p];
+		int count = 0;
 		for (int a = 0; a < bry.length; a++) {
-			if (parity(a)) {
-				bry[a] = i[b];
-				b++;
+			if (parity(a+1)) {
+				PCount[count] = a;
+				count++;
+			}else {
+				bry[a] = i[a-count];
 			}
 		}
 		for (int k = 0; k < p; k++) {
-			bry[(int) Math.pow(2, k) - 1] = EvenParity(k, bry);
+			bry[PCount[k]] = EvenParity(PCount[k], bry);
 		}
 		
 		return bry;
@@ -60,11 +63,11 @@ public class Calculator {
 
 	public static boolean parity(int i) {
 		for (int j = 0; j < p; j++) {
-			if ((i + 1) == Math.pow(2, j)) {
-				return false;
+			if (i == Math.pow(2, j)) {
+				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 
 	public static int EvenParity(int py, int[] bry) {
