@@ -4,12 +4,14 @@ public class Calculator {
 	private static int p;
 
 	public static void main(String[] args) {
-		String input = JOptionPane.showInputDialog("Enter a number");
-		int[] inBry = BinaryGenerate(input);
-		int[] HMcode = HammingCodeGenerate(inBry);
-		JOptionPane.showMessageDialog(null,
-				printArray("Bit Convertion: ", inBry) + "\n" + printArray("HammingCode: ", HMcode));
-
+		// String input = JOptionPane.showInputDialog("Enter a number");
+		// int[] inBry = BinaryGenerate(input);
+		// int[] HMcode = HammingCodeGenerate(inBry);
+		// JOptionPane.showMessageDialog(null,
+		// printArray("Bit Convertion: ", inBry) + "\n" + printArray("HammingCode: ",
+		// HMcode));
+		String Errin = JOptionPane.showInputDialog("Enter error message");
+		validate(Errin);
 	}
 
 	static public String printArray(String s, int[] a) {
@@ -38,32 +40,59 @@ public class Calculator {
 	public static int[] HammingCodeGenerate(int[] i) {
 		int m = i.length;
 		for (int j = 0;; j++) {
-			if (m + j + 1 >= Math.pow(2, j)) {
+			if (Math.pow(2, j) >= m + j + 1) {
 				p = j;
 				break;
 			}
 		}
-		int[] bry = new int[m + p];
+		int[] ham = new int[m + p];
+		int[] hamming = new int[m + p];
 		int[] PCount = new int[p];
 		int count = 0;
-		for (int a = 0; a < bry.length; a++) {
-			if (parity(a + 1)) {
+		for (int a = 0; a < ham.length; a++) {
+			if (parity(a)) {
 				PCount[count] = a;
 				count++;
 			} else {
-				bry[a] = i[a - count];
+				ham[a] = i[a - count];
 			}
 		}
 		for (int k = 0; k < p; k++) {
-			bry[PCount[k]] = EvenParity(PCount[k], bry);
+			ham[PCount[k]] = EvenParity(PCount[k], ham);
 		}
+		int s = m + p - 1;
+		for (int h = 0; h < m + p; h++) {
+			hamming[h] = ham[s];
+			s--;
+		}
+		return hamming;
+	}
 
-		return bry;
+	public static void validate(String str) {
+		int[] ham = new int[str.length()];
+		int err = -1;
+		int j = ham.length - 1;
+		for (int i = 0; i < str.length(); i++) {
+			ham[j] = str.charAt(i);
+			j--;
+		}
+		for (int i = 0; i < ham.length; i++) {
+			if (parity(i)) {
+				if (EvenParity(i, ham) != 0) {
+					err = i;
+				}
+			}
+		}
+		if (err == -1) {
+			JOptionPane.showMessageDialog(null, "Received codes are valid");
+		} else {
+			JOptionPane.showMessageDialog(null, "Received codes are invalid. Found error at " + (err + 1));
+		}
 	}
 
 	public static boolean parity(int i) {
 		for (int j = 0; j < p; j++) {
-			if (i == Math.pow(2, j)) {
+			if (i == Math.pow(2, j) - 1) {
 				return true;
 			}
 		}
@@ -72,9 +101,9 @@ public class Calculator {
 
 	public static int EvenParity(int py, int[] bry) {
 		int pt = 0;
-		for (int c = (int) (Math.pow(2, py) - 1); c < bry.length; c = +2 * (py + 1)) {
-			for (int j = 0; j < Math.pow(2, py); j++) {
-				if (bry[c] == 1) {
+		for (int c = py; c < bry.length; c += 2 * (py + 1)) {
+			for (int j = c; j < Math.min(c + py + 1, bry.length); j++) {
+				if (bry[j] == 1) {
 					pt++;
 				}
 			}
