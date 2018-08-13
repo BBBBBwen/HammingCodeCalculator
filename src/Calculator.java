@@ -1,9 +1,21 @@
+import java.util.Scanner;
+
 import javax.swing.JOptionPane;
 
 public class Calculator {
 	private static int p;
 
 	public static void main(String[] args) {
+<<<<<<< HEAD
+		Scanner sc = new Scanner(System.in);
+		//String input = sc.nextLine();
+		//System.out.print("Enter a number");
+		//int[] inBry = BinaryGenerate(input);
+		//int[] HMcode = HammingCodeGenerate(inBry);
+		//System.out.print(printArray("Bit Convertion: ", inBry) + "\n" + printArray("HammingCode: ", HMcode));
+		String Errin = sc.nextLine();
+		System.out.print("Enter error message");
+=======
 		String input = JOptionPane.showInputDialog("Enter a number");
 		int[] inBry = BinaryGenerate(input);
 		int[] HMcode = HammingCodeGenerate(inBry);
@@ -11,7 +23,9 @@ public class Calculator {
 		printArray("Bit Convertion: ", inBry) + "\n" + printArray("HammingCode: ",
 		HMcode));
 		String Errin = JOptionPane.showInputDialog("Enter error message");
+>>>>>>> 8f2b72c262c242c35d1e06e5a90f0b4877a5e5fc
 		validate(Errin);
+		sc.close();
 	}
 
 	static public String printArray(String s, int[] a) {
@@ -50,7 +64,7 @@ public class Calculator {
 		int[] PCount = new int[p];
 		int count = 0;
 		for (int a = 0; a < ham.length; a++) {
-			if (parity(a)) {
+			if (parity(a,ham)) {
 				PCount[count] = a;
 				count++;
 			} else {
@@ -72,26 +86,38 @@ public class Calculator {
 		int[] ham = new int[str.length()];
 		int err = -1;
 		int j = ham.length - 1;
-		for (int i = 0; i < str.length(); i++) {
-			ham[j] = str.charAt(i);
-			j--;
-		}
 		for (int i = 0; i < ham.length; i++) {
-			if (parity(i)) {
-				if (EvenParity(i, ham) != 0) {
+			ham[j] = str.charAt(i)-48;
+			j--;
+			//System.out.print(printArray("",ham));
+		}
+		System.out.println(printArray("",ham));
+		for (int i = 0; i < ham.length; i++) {
+			if (parity(i,ham)) {
+				if (EvenParity(i, ham) == 1) {
 					err = i;
+					break;
 				}
 			}
 		}
 		if (err == -1) {
-			JOptionPane.showMessageDialog(null, "Received codes are valid");
+			System.out.print("Received codes are valid");
 		} else {
-			JOptionPane.showMessageDialog(null, "Received codes are invalid. Found error at " + (err + 1));
+			System.out.print("Received codes are invalid. Found error at " + (err + 1));
+			ham[err] = 1 - ham[err];
+			System.out.print(printArray("the Correct cide are ",ham));
 		}
 	}
 
-	public static boolean parity(int i) {
-		for (int j = 0; j < p; j++) {
+	public static boolean parity(int i,int[] str) {
+		int t;
+		for (int j = 0;; j++) {
+			if (Math.pow(2, j) >= str.length) {
+				t = j;
+				break;
+			}
+		}
+		for (int j = 0; j < t; j++) {
 			if (i == Math.pow(2, j) - 1) {
 				return true;
 			}
@@ -102,7 +128,7 @@ public class Calculator {
 	public static int EvenParity(int py, int[] bry) {
 		int pt = 0;
 		for (int c = py; c < bry.length; c += 2 * (py + 1)) {
-			for (int j = c; j < Math.min(c + py + 1, bry.length); j++) {
+			for (int j = c; j < c + py + 1; j++) {
 				if (bry[j] == 1) {
 					pt++;
 				}
