@@ -4,12 +4,12 @@ public class Calculator {
 	private static int p;
 
 	public static void main(String[] args) {
-		// String input = JOptionPane.showInputDialog("Enter a number");
-		// int[] inBry = BinaryGenerate(input);
-		// int[] HMcode = HammingCodeGenerate(inBry);
-		// JOptionPane.showMessageDialog(null,
-		// printArray("Bit Convertion: ", inBry) + "\n" + printArray("HammingCode: ",
-		// HMcode));
+		String input = JOptionPane.showInputDialog("Enter a number");
+		int[] inBry = BinaryGenerate(input);
+		int[] HMcode = HammingCodeGenerate(inBry);
+		JOptionPane.showMessageDialog(null,
+		printArray("Bit Convertion: ", inBry) + "\n" + printArray("HammingCode: ",
+		HMcode));
 		String Errin = JOptionPane.showInputDialog("Enter error message");
 		validate(Errin);
 	}
