@@ -5,8 +5,8 @@ public class Calculator {
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		String input = sc.nextLine();
 		System.out.print("Enter a number");
+		String input = sc.nextLine();
 		int[] inBry = BinaryGenerate(input);
 		int[] HMcode = HammingCodeGenerate(inBry);
 		printArray("Bit Convertion: ", inBry);
@@ -40,8 +40,8 @@ public class Calculator {
 		return bry;
 	}
 
-	public static int[] HammingCodeGenerate(int[] i) {
-		int m = i.length;
+	public static int[] HammingCodeGenerate(int[] Binary) {
+		int m = Binary.length;
 		for (int j = 0;; j++) {
 			if (Math.pow(2, j) >= m + j + 1) {
 				p = j;
@@ -49,12 +49,12 @@ public class Calculator {
 			}
 		}
 		int[] ham = new int[m + p];
-		int[] hamming = new int[m + p];
+		int[] hamming = new int[m];
 		int[] PCount = new int[p];
 		int count = 0;
-		int s = m + p - 1;
-		for (int h = 0; h < m + p; h++) {
-			hamming[h] = i[s];
+		int s = m - 1;
+		for (int h = 0; h < m; h++) {
+			hamming[h] = Binary[s];
 			s--;
 		}
 		for (int a = 0; a < ham.length; a++) {
@@ -68,30 +68,35 @@ public class Calculator {
 		for (int k = 0; k < p; k++) {
 			ham[PCount[k]] = EvenParity(PCount[k], ham);
 		}
-		
-		return ham;
+		int[] HMbackward = new int[m+p];
+		int Backw = m + p - 1;
+		for (int h = 0; h < m + p; h++) {
+			HMbackward[h] = ham[Backw];
+			Backw--;
+		}
+		return HMbackward;
 	}
 
 	public static void validate(String str) {
 		int[] ham = new int[str.length()];
 		int err = -1;
 		int j = ham.length - 1;
+		int[] HMbackward = new int[str.length()];
+		int Backw = str.length() - 1;
 		for (int i = 0;; i++) {
-			if (Math.pow(2, j) >= ham.length) {
-				p = j;
+			if (Math.pow(2, i) >= ham.length) {
+				p = i;
 				break;
 			}
 		}
 		for (int i = 0; i < ham.length; i++) {
 			ham[j] = str.charAt(i) - 48;
 			j--;
-			// System.out.print(printArray("",ham));
 		}
-		//System.out.println(printArray("", ham));
 		for (int i = 0; i < ham.length; i++) {
 			if (parity(i, ham)) {
 				if (EvenParity(i, ham) == 1) {
-					err = err + i;
+					err = err + i + 1;
 				}
 			}
 		}
@@ -100,7 +105,11 @@ public class Calculator {
 		} else {
 			System.out.print("Received codes are invalid. Found error at " + (err + 1));
 			ham[err] = 1 - ham[err];
-			printArray("\nthe Correct cide are ", ham);
+			for (int h = 0; h < str.length(); h++) {
+				HMbackward[h] = ham[Backw];
+				Backw--;
+			}
+			printArray("\nthe Correct cide are ", HMbackward);
 		}
 	}
 
