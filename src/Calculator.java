@@ -61,16 +61,12 @@ public class Calculator {
 		int count = 0;
 		int s = m - 1;
 		for (int h = 0; h < m; h++) {
-<<<<<<< HEAD
 			// Store numbers backwards;
-=======
->>>>>>> parent of 623d54e... fix
 			hamming[h] = Binary[s];
 			s--;
 		}
 		for (int a = 0; a < ham.length; a++) {
 			if (parity(a, ham)) {
-<<<<<<< HEAD
 				// Find out where parity is
 				PCount[count] = a;
 				// parity number
@@ -82,24 +78,12 @@ public class Calculator {
 		}
 		for (int k = 0; k < p; k++) {
 			// Store parity into hamming code
-=======
-				PCount[count] = a;
-				count++;
-			} else {
-				ham[a] = hamming[a - count];
-			}
-		}
-		for (int k = 0; k < p; k++) {
->>>>>>> parent of 623d54e... fix
 			ham[PCount[k]] = EvenParity(PCount[k], ham);
 		}
 		int[] HMbackward = new int[m + p];
 		int Backw = m + p - 1;
 		for (int h = 0; h < m + p; h++) {
-<<<<<<< HEAD
 			// Store hammingcode backwards,so it display correctly;
-=======
->>>>>>> parent of 623d54e... fix
 			HMbackward[h] = ham[Backw];
 			Backw--;
 		}
@@ -114,7 +98,6 @@ public class Calculator {
 		int[] HMbackward = new int[str.length()];
 		int Backw = str.length() - 1;
 		// find the first R_
-<<<<<<< HEAD
 
 		for (int i = 0; i < ham.length; i++) {
 			ham[j] = str.charAt(i) - 48;
@@ -123,19 +106,6 @@ public class Calculator {
 		}
 		for (int i = 0; i < ham.length; i++) {
 			// find out err position;
-=======
-		for (int i = 0;; i++) {
-			if (Math.pow(2, i) >= ham.length) {
-				p = i;
-				break;
-			}
-		}
-		for (int i = 0; i < ham.length; i++) {
-			ham[j] = str.charAt(i) - 48;
-			j--;
-		}
-		for (int i = 0; i < ham.length; i++) {
->>>>>>> parent of 623d54e... fix
 			if (parity(i, ham)) {
 				if (EvenParity(i, ham) == 1) {
 					err = err + i + 1;
@@ -147,10 +117,7 @@ public class Calculator {
 		} else {
 			System.out.print("Received codes are invalid. Found error at " + (err + 1));
 			ham[err] = 1 - ham[err];
-<<<<<<< HEAD
 			// Correct error;
-=======
->>>>>>> parent of 623d54e... fix
 			for (int h = 0; h < str.length(); h++) {
 				HMbackward[h] = ham[Backw];
 				Backw--;
@@ -160,11 +127,7 @@ public class Calculator {
 	}
 
 	public static boolean parity(int i, int[] str) {
-<<<<<<< HEAD
 		// Find out parity;
-=======
-
->>>>>>> parent of 623d54e... fix
 		for (int j = 0; j < p; j++) {
 			if (i == Math.pow(2, j) - 1) {
 				return true;
@@ -176,26 +139,17 @@ public class Calculator {
 	public static int EvenParity(int py, int[] bry) {
 		int pt = 0;
 		for (int c = py; c < bry.length; c += 2 * (py + 1)) {
-<<<<<<< HEAD
 			// Determine interval among numbers;
 			for (int j = c; j < Math.min(c + py + 1, bry.length); j++) {
 				// pull out each number;
 				if (bry[j] == 1) {
 					pt++;
 					// add each number together;
-=======
-			for (int j = c; j < Math.min(c + py + 1,bry.length); j++) {
-				if (bry[j] == 1) {
-					pt++;
->>>>>>> parent of 623d54e... fix
 				}
 			}
 		}
 		if (pt % 2 == 0) {
-<<<<<<< HEAD
 			// see if its even or odd
-=======
->>>>>>> parent of 623d54e... fix
 			return 0;
 		} else {
 			return 1;
