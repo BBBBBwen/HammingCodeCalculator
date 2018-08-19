@@ -18,10 +18,8 @@ public class Calculator {
 	}
 
 	static public void printArray(String s, int[] a) {
-		// create extra space for looking
 		String str = (s + " ");
 		int i = 0;
-		// print the array
 		while (i < a.length) {
 			str = str + a[i] + " ";
 			i++;
@@ -30,12 +28,9 @@ public class Calculator {
 	}
 
 	public static int[] BinaryGenerate(String i) {
-		// initialize the array
 		int[] bry = new int[i.length()];
-		// put in the number one by one
 		for (int a = 0; a < i.length(); a++) {
 			bry[a] = i.charAt(a);
-			// determine if even or odd
 			if (bry[a] % 2 == 0) {
 				bry[a] = 0;
 			} else {
@@ -47,14 +42,12 @@ public class Calculator {
 
 	public static int[] HammingCodeGenerate(int[] Binary) {
 		int m = Binary.length;
-		// determine the R_ locations
 		for (int j = 0;; j++) {
 			if (Math.pow(2, j) >= m + j + 1) {
 				p = j;
 				break;
 			}
 		}
-		// initialize the arrays
 		int[] ham = new int[m + p];
 		int[] hamming = new int[m];
 		int[] PCount = new int[p];
@@ -73,7 +66,7 @@ public class Calculator {
 				count++;
 			} else {
 				ham[a] = hamming[a - count];
-				// Store number into hamming code
+				// Store number into hamming code valuable;
 			}
 		}
 		for (int k = 0; k < p; k++) {
@@ -91,13 +84,11 @@ public class Calculator {
 	}
 
 	public static void validate(String str) {
-		// initialize the array for input code
 		int[] ham = new int[str.length()];
 		int err = -1;
 		int j = ham.length - 1;
 		int[] HMbackward = new int[str.length()];
 		int Backw = str.length() - 1;
-		// find the first R_
 
 		for (int i = 0; i < ham.length; i++) {
 			ham[j] = str.charAt(i) - 48;
@@ -139,7 +130,7 @@ public class Calculator {
 	public static int EvenParity(int py, int[] bry) {
 		int pt = 0;
 		for (int c = py; c < bry.length; c += 2 * (py + 1)) {
-			// Determine interval among numbers;
+			// Determine interval among numbers with 2^x;
 			for (int j = c; j < Math.min(c + py + 1, bry.length); j++) {
 				// pull out each number;
 				if (bry[j] == 1) {
